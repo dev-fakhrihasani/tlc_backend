@@ -1,0 +1,1 @@
+import Partners from "../models/PartnerModel";
