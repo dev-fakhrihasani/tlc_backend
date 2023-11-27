@@ -2,8 +2,28 @@ import Counters from '../models/CounterModel.js'
 
 export const getCounter = async (req, res) => {
   try {
-    const counter = await Counters.findAll()
+    const counter = await Counters.findAll({
+      attributes: ['id', 'name', 'amount']
+    })
     res.status(200).json(counter)
+  } catch (error) {
+    res.status(500).json({ msg: error.message })
+  }
+}
+
+export const getCounterById = async (req, res) => {
+  try {
+    const counter = await Counters.findOne({
+      attributes: ['id', 'name', 'amount'],
+      where: {
+        id: req.params.id
+      }
+    })
+    if (!counter) {
+      return res.status(404).json({ msg: "Data tidak ada" })
+    } else {
+      return res.status(200).json(counter)
+    }
   } catch (error) {
     res.status(500).json({ msg: error.message })
   }
