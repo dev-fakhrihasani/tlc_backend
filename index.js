@@ -14,6 +14,7 @@ import Finances from './models/FinanceModel.js';
 import Blogs from './models/BlogModel.js';
 import Partners from './models/PartnerModel.js';
 import Testimony from './models/TestimonyModel.js';
+import Volunteer from './models/VolunteerModel.js';
 
 // import ROUTES
 import UserRoute from './routes/UserRouter.js';
@@ -24,6 +25,7 @@ import AuthRoute from './routes/AuthRoute.js'
 import BlogRoute from './routes/BlogRoute.js'
 import PartnerRoute from './routes/PartnerRoute.js'
 import TestimonyRoute from './routes/TestimonyRoute.js'
+import VolunteerRoute from './routes/VolunteerRoute.js'
 
 dotenv.config()
 const app = express();
@@ -48,7 +50,7 @@ const store = new sessionStore({
 //   console.log('Database connected...');
 //   // await Users.sync();
 //   // await Blogs.sync();
-//   // await Testimony.sync();
+//   // await Volunteer.sync();
 // } catch (error) {
 //   console.error('Connection error:', error);
 // }
@@ -82,6 +84,7 @@ app.use(AuthRoute)
 app.use(BlogRoute)
 app.use(PartnerRoute)
 app.use(TestimonyRoute)
+app.use(VolunteerRoute)
 
 // store.sync()
 
