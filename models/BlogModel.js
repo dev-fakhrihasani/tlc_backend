@@ -1,9 +1,10 @@
 import { Sequelize } from "sequelize";
 import db from '../config/Database.js';
+import Users from "./UserModel.js";
 
 const { DataTypes } = Sequelize;
 
-const Users = db.define('users', {
+const Blogs = db.define('blogs', {
   uuid: {
     type: DataTypes.STRING,
     defaultValue: DataTypes.UUIDV4,
@@ -12,53 +13,53 @@ const Users = db.define('users', {
       notEmpty: true
     }
   },
-  name: {
+  title: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
       notEmpty: true,
-      len: [3, 100]
     }
   },
-  email: {
+  slug: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
       notEmpty: true,
-      isEmail: true
     }
   },
-  password: {
+  desc: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
       notEmpty: true
     }
   },
-  role: {
+  date: {
+    type: DataTypes.DATE,
+    allowNull: false,
+    validate: {
+      notEmpty: true
+    }
+  },
+  category: {
     type: DataTypes.STRING,
     allowNull: false,
     validate: {
       notEmpty: true
     }
   },
-  job: {
-    type: DataTypes.STRING,
+  userId: {
+    type: DataTypes.INTEGER,
     allowNull: false,
     validate: {
       notEmpty: true
     }
-  },
-  image: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
-  url: {
-    type: DataTypes.STRING,
-    allowNull: true
   }
 }, {
   freezeTableName: true
 })
 
-export default Users;
+Users.hasMany(Blogs)
+Blogs.belongsTo(Users, { foreignKey: 'userId' })
+
+export default Blogs;
