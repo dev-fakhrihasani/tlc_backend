@@ -6,7 +6,7 @@ const router = express.Router()
 router.get('/partners', getPartners)
 router.get('/partners/:id', getPartnerById)
 router.post('/partners', createPartner)
-router.patch('/partners', updatePartner)
-router.delete('/partners', deletePartner)
+router.patch('/partners/:id', updatePartner)
+router.delete('/partners/:id', deletePartner)
 
 export default router

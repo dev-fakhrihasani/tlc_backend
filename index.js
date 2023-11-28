@@ -12,6 +12,7 @@ import Counters from './models/CounterModel.js';
 import Programs from './models/ProgramModel.js';
 import Finances from './models/FinanceModel.js';
 import Blogs from './models/BlogModel.js';
+import Partners from './models/PartnerModel.js';
 
 // import ROUTES
 import UserRoute from './routes/UserRouter.js';
@@ -45,6 +46,7 @@ const store = new sessionStore({
 //   console.log('Database connected...');
 //   // await Users.sync();
 //   // await Blogs.sync();
+//   // await Partners.sync();
 // } catch (error) {
 //   console.error('Connection error:', error);
 // }

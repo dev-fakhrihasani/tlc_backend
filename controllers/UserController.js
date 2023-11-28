@@ -92,7 +92,7 @@ export const updateUser = async (req, res) => {
   // Cek apakah ada file
   let fileName = ""
   if (req.files === null) {
-    fileName = Users.image
+    fileName = user.image
   } else {
     const file = req.files.file
     const fileSize = file.data.length
