@@ -12,12 +12,13 @@ const Partners = db.define('partners', {
       len: [3, 100]
     }
   },
-  logo: {
+  image: {
     type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      notEmpty: true
-    }
+    allowNull: false
+  },
+  url: {
+    type: DataTypes.STRING,
+    allowNull: false
   }
 }, { freezeTableName: true }
 )

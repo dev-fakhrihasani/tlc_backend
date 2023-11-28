@@ -20,6 +20,7 @@ import ProgramRoute from './routes/ProgramRoute.js'
 import FinanceRoute from './routes/FinanceRoute.js'
 import AuthRoute from './routes/AuthRoute.js'
 import BlogRoute from './routes/BlogRoute.js'
+import PartnerRoute from './routes/PartnerRoute.js'
 
 dotenv.config()
 const app = express();
@@ -75,6 +76,7 @@ app.use(ProgramRoute)
 app.use(FinanceRoute)
 app.use(AuthRoute)
 app.use(BlogRoute)
+app.use(PartnerRoute)
 
 // store.sync()
 
