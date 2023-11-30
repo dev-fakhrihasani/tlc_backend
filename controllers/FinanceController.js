@@ -19,6 +19,7 @@ export const getFinanceById = async (req, res) => {
         id: req.params.id
       }
     })
+    if (!counter) return res.status(404).json({ msg: "Data finance not found!" })
     res.status(200).json(finance)
   } catch (error) {
     res.status(500).json({ msg: error.message })
@@ -31,7 +32,7 @@ export const createFinance = async (req, res) => {
     await Finances.create({
       income, outcome
     })
-    res.status(201).json({ msg: "Berhasil menambah pemasukan" })
+    res.status(201).json({ msg: "Data finance created successfully" })
   } catch (error) {
     res.status(500).json({ msg: error.message })
   }
@@ -43,7 +44,7 @@ export const updateFinance = async (req, res) => {
       id: req.params.id
     }
   })
-  if (!finance) return res.status(400).json({ msg: "Data tidak ditemukan" })
+  if (!finance) return res.status(400).json({ msg: "Data finance not found" })
   const { month, income, outcome } = req.body
   try {
     await Finances.update({
@@ -53,7 +54,7 @@ export const updateFinance = async (req, res) => {
         id: finance.id
       }
     })
-    res.status(201).json({ msg: "Data berhasil di-update" })
+    res.status(201).json({ msg: "Data finance updated" })
   } catch (error) {
     res.status(500).json({ msg: error.msg })
   }
@@ -65,16 +66,15 @@ export const deleteFinance = async (req, res) => {
       id: req.params.id
     }
   })
-  if (!finance) return res.status(404).json({ msg: "Data tidak ditemukan" })
+  if (!finance) return res.status(404).json({ msg: "Data finance not found" })
   try {
     await Finances.destroy({
       where: {
         id: finance.id
       }
     })
-    res.status(200).json({ msg: "Data berhasil dihapus" })
+    res.status(200).json({ msg: "Data finance deleted" })
   } catch (error) {
     res.status(500).json({ msg: error.message })
-
   }
 }
