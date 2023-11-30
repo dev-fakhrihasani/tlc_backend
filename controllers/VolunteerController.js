@@ -22,6 +22,7 @@ export const getVolunteerById = async (req, res) => {
         id: req.params.id
       }
     });
+    if (!volunteer) return res.status(404).json({ msg: "Data volunteer not found!" })
     res.json(volunteer);
   } catch (error) {
     console.log(error.message);
