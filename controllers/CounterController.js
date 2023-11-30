@@ -20,7 +20,7 @@ export const getCounterById = async (req, res) => {
       }
     })
     if (!counter) {
-      return res.status(404).json({ msg: "Data tidak ada" })
+      return res.status(404).json({ msg: "Data counter not found!" })
     } else {
       return res.status(200).json(counter)
     }
@@ -36,7 +36,7 @@ export const createCounter = async (req, res) => {
       name,
       amount
     })
-    res.status(200).json({ msg: "Berhasil menambahkan data" })
+    res.status(200).json({ msg: "Data counter created successfully" })
   } catch (error) {
     res.status(500).json({ msg: error.message })
   }
@@ -48,7 +48,7 @@ export const updateCounter = async (req, res) => {
       id: req.params.id
     }
   })
-  if (!counter) return res.status(404).json({ msg: "Data tidak ditemukan" })
+  if (!counter) return res.status(404).json({ msg: "Data counter not found" })
   const { name, amount } = req.body
   try {
     await Counters.update({
@@ -58,7 +58,7 @@ export const updateCounter = async (req, res) => {
         id: counter.id
       }
     })
-    res.status(200).json({ msg: "Data berhasil diupdate" })
+    res.status(200).json({ msg: "Data counter updated successfully" })
   } catch (error) {
     res.status(500).json({ msg: error.message })
 
@@ -71,14 +71,14 @@ export const deleteCounter = async (req, res) => {
       id: req.params.id
     }
   })
-  if (!counter) return res.status(404).json({ msg: "Data tidak ada" })
+  if (!counter) return res.status(404).json({ msg: "Data counter not found" })
   try {
     await Counters.destroy({
       where: {
         id: counter.id
       }
     })
-    res.status(200).json({ msg: "Data berhasil dihapus" })
+    res.status(200).json({ msg: "Data counter deleted successfully" })
   } catch (error) {
     res.status(501).json({ msg: error.message })
 
