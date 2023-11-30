@@ -19,7 +19,7 @@ export const getFinanceById = async (req, res) => {
         id: req.params.id
       }
     })
-    if (!counter) return res.status(404).json({ msg: "Data finance not found!" })
+    if (!finance) return res.status(404).json({ msg: "Data finance not found!" })
     res.status(200).json(finance)
   } catch (error) {
     res.status(500).json({ msg: error.message })
