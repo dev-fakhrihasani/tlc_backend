@@ -20,6 +20,7 @@ export const getTestimonyById = async (req, res) => {
         id: req.params.id
       }
     })
+    if (!testimony) return res.status(404).json({ msg: "Data testimony not found!" })
     res.status(200).json(testimony)
   } catch (error) {
     res.status(200).json({ msg: error.message })
@@ -114,7 +115,7 @@ export const updateTestimony = async (req, res) => {
         id: testimony.id
       }
     })
-    res.status(200).json({ msg: "Partner updated successfully" })
+    res.status(200).json({ msg: "Data testimony updated successfully" })
     // res.json(user)
   } catch (error) {
     res.status(400).json({ msg: error.message })
@@ -138,7 +139,7 @@ export const deleteTestimony = async (req, res) => {
         id: testimony.id
       }
     })
-    res.status(200).json({ msg: "Testimony deleted successfully" })
+    res.status(200).json({ msg: "Data Testimony deleted successfully" })
   } catch (error) {
     res.status(400).json({ msg: error.message })
   }
