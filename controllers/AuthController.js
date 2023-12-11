@@ -18,13 +18,14 @@ export const Login = async (req, res) => {
   const role = user.role
   const job = user.job
   const image = user.image
-  res.status(200).json({ uuid, name, email, role, job, image })
+  const url = user.url
+  res.status(200).json({ uuid, name, email, role, job, image, url })
 }
 
 export const Me = async (req, res) => {
   if (!req.session.userId) return res.status(401).json({ msg: "Please login!" })
   const user = await Users.findOne({
-    attributes: ['uuid', 'name', 'email', 'role', 'job', 'image'],
+    attributes: ['uuid', 'name', 'email', 'role', 'job', 'image', 'url'],
     where: {
       uuid: req.session.userId
     }
