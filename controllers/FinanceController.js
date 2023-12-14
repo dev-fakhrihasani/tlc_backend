@@ -3,7 +3,7 @@ import Finances from "../models/FinanceModel.js";
 export const getFinance = async (req, res) => {
   try {
     const finance = await Finances.findAll({
-      attributes: ['id', 'income', 'outcome']
+      attributes: ['id', 'month', 'income', 'outcome']
     });
     res.status(200).json(finance);
   } catch (error) {
@@ -14,7 +14,7 @@ export const getFinance = async (req, res) => {
 export const getFinanceById = async (req, res) => {
   try {
     const finance = await Finances.findOne({
-      attributes: ['id', 'income', 'outcome'],
+      attributes: ['id', 'month', 'income', 'outcome'],
       where: {
         id: req.params.id
       }
@@ -27,10 +27,10 @@ export const getFinanceById = async (req, res) => {
 }
 
 export const createFinance = async (req, res) => {
-  const { income, outcome } = req.body
+  const { month, income, outcome } = req.body
   try {
     await Finances.create({
-      income, outcome
+      month, income, outcome
     })
     res.status(201).json({ msg: "Data finance created successfully" })
   } catch (error) {
