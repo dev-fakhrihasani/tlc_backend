@@ -42,7 +42,7 @@ const store = new sessionStore({
 
 // // command for drop table
 // (async () => {
-//   await db.drop()
+//   await Finances.drop()
 // })()
 
 // try {
@@ -50,7 +50,7 @@ const store = new sessionStore({
 //   console.log('Database connected...');
 //   // await Users.sync();
 //   // await Blogs.sync();
-//   // await Volunteer.sync();
+//   await Finances.sync();
 // } catch (error) {
 //   console.error('Connection error:', error);
 // }
