@@ -1,6 +1,8 @@
 import Blog from "../models/BlogModel.js";
 import User from "../models/UserModel.js";
 // import { Op } from "sequelize"
+import path from "path"
+import fs from "fs"
 
 export const getBlogs = async (req, res) => {
   try {
@@ -13,7 +15,7 @@ export const getBlogs = async (req, res) => {
       })
     } else {
       blog = await Blog.findAll({
-        attributes: ['id', 'title', 'slug', 'desc', 'date', 'category'],
+        attributes: ['id', 'title', 'slug', 'desc', 'date', 'category', 'image', 'url'],
         include: [{
           model: User,
           attributes: ['id', 'name', 'image', 'url', 'job']
@@ -29,7 +31,7 @@ export const getBlogs = async (req, res) => {
 export const getBlogById = async (req, res) => {
   try {
     const blog = await Blog.findOne({
-      attributes: ['id', 'title', 'slug', 'desc', 'date', 'category'],
+      attributes: ['id', 'title', 'slug', 'desc', 'date', 'category', 'image', 'url'],
       where: {
         // [Op.and]: [{ id: blog.id }, { userId: req.userId }]
         id: req.params.id
@@ -47,21 +49,50 @@ export const getBlogById = async (req, res) => {
 }
 
 export const createBlog = async (req, res) => {
-  const { title, slug, desc, date, category } = req.body
-  try {
-    await Blog.create({
-      title,
-      slug,
-      desc,
-      date,
-      category,
-      userId: req.userId
-    })
-    res.status(201).json({ msg: "Blog created succesfully" })
-  } catch (error) {
-    res.status(500).json({ msg: error.message })
-  }
+  // Cek apakah ada file
+  if (req.files === null) return res.status(400).json({ msg: "No file uploaded" })
 
+  const title = req.body.title
+  const slug = req.body.slug
+  const desc = req.body.desc
+  const date = req.body.date
+  const category = req.body.category
+
+  // Setting input file
+  const file = req.files.file
+  const fileSize = file.data.length
+  const ext = path.extname(file.name)
+  const timeStamp = new Date().getTime()
+  const fileName = file.md5 + timeStamp + ext
+  const url = `${req.protocol}://${req.get("host")}/images/${fileName}`
+  const allowedType = [".png", ".jpg", ".jpeg"]
+
+  // Validasi ekstensi file dan ukuran file
+  if (!allowedType.includes(ext.toLowerCase())) return res.status(422).json({ msg: "Image's extension must be JPG or PNG" })
+  if (fileSize > 5000000) return res.status(422).json({ msg: "Image must be less than 5 MB" })
+
+  // Menyimpan file di folder public/image
+  file.mv(`./public/images/${fileName}`, async (err) => {
+    // Validasi apakah ada error
+    if (err) return res.status(500).json({ msg: err.message })
+
+    // Create data
+    try {
+      await Blog.create({
+        title,
+        slug,
+        desc,
+        date,
+        category,
+        image: fileName,
+        url,
+        userId: req.userId
+      })
+      res.status(201).json({ msg: "Blog created succesfully" })
+    } catch (error) {
+      res.status(500).json({ msg: error.message })
+    }
+  })
 }
 
 export const updateBlog = async (req, res) => {

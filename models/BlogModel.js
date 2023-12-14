@@ -48,6 +48,14 @@ const Blogs = db.define('blogs', {
       notEmpty: true
     }
   },
+  image: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  url: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
   userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
