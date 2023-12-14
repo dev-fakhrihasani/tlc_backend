@@ -35,7 +35,7 @@ const Blogs = db.define('blogs', {
     }
   },
   date: {
-    type: DataTypes.DATE,
+    type: DataTypes.DATEONLY,
     allowNull: false,
     validate: {
       notEmpty: true

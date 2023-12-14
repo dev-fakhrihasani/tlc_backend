@@ -104,14 +104,45 @@ export const updateBlog = async (req, res) => {
     })
     if (!blog) return res.status(404).json({ msg: "Data blog not found" })
 
-    const { title, slug, desc, date, category } = req.body
+    // Cek apakah ada file
+    let fileName = ""
+    if (req.files === null) {
+      fileName = blog.image
+    } else {
+      const file = req.files.file
+      const fileSize = file.data.length
+      const ext = path.extname(file.name)
+      fileName = file.md5 + ext
+
+      const allowedType = [".png", ".jpg", ".jpeg"]
+
+      if (!allowedType.includes(ext.toLowerCase())) return res.status(422).json({ msg: "Image extension must be JPG or PNG" })
+      if (fileSize > 5000000) return res.status(422).json({ msg: "Image must be less than 5 MB" })
+
+      const filepath = `./public/images/${blog.image}`
+      fs.unlinkSync(filepath)
+      file.mv(`./public/images/${fileName}`, (err) => {
+        if (err) return res.status(500).json({ msg: err.message })
+      })
+    }
+
+    const title = req.body.title
+    const slug = req.body.slug
+    const desc = req.body.desc
+    const date = req.body.date
+    const category = req.body.category
+    const url = `${req.protocol}://${req.get("host")}/images/${fileName}`
+
+
     if (req.role === 'Admin') {
       await blog.update({
         title,
         slug,
         desc,
         date,
-        category
+        category,
+        image: fileName,
+        url
       }, {
         where: {
           id: blog.id
@@ -134,6 +165,9 @@ export const deleteBlog = async (req, res) => {
       }
     })
     if (!blog) return res.status(404).json({ msg: "Data blog not found" })
+
+    const filepath = `./public/images/${blog.image}`
+    fs.unlinkSync(filepath)
 
     if (req.role === 'Admin') {
       await blog.destroy({
