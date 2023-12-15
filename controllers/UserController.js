@@ -1,9 +1,9 @@
-import Users from '../models/UserModel.js'
-import argon from "argon2"
-import path from "path"
-import fs from "fs"
+const Users = require('../models/UserModel.js')
+const argon = require("argon2")
+const path = require("path")
+const fs = require("fs")
 
-export const getUsers = async (req, res) => {
+const getUsers = async (req, res) => {
   try {
     const users = await Users.findAll({
       attributes: ['uuid', 'name', 'email', 'role', 'job', 'image', 'url',],
@@ -14,7 +14,7 @@ export const getUsers = async (req, res) => {
   }
 }
 
-export const getUserById = async (req, res) => {
+const getUserById = async (req, res) => {
   try {
     const users = await Users.findOne({
       attributes: ['uuid', 'name', 'email', 'role', 'job', 'image', 'url'],
@@ -28,7 +28,7 @@ export const getUserById = async (req, res) => {
   }
 }
 
-export const createUser = async (req, res) => {
+const createUser = async (req, res) => {
   // Cek apakah ada file
   if (req.files === null) return res.status(400).json({ msg: "No file uploaded" })
 
@@ -80,7 +80,7 @@ export const createUser = async (req, res) => {
   })
 }
 
-export const updateUser = async (req, res) => {
+const updateUser = async (req, res) => {
 
   // Cari user berdasarkan ID
   const user = await Users.findOne({
@@ -146,7 +146,7 @@ export const updateUser = async (req, res) => {
   }
 }
 
-export const deleteUser = async (req, res) => {
+const deleteUser = async (req, res) => {
   const user = await Users.findOne({
     where: {
       uuid: req.params.id
@@ -166,4 +166,12 @@ export const deleteUser = async (req, res) => {
   } catch (error) {
     res.status(400).json({ msg: error.message })
   }
+}
+
+module.exports = {
+  getUsers,
+  getUserById,
+  createUser,
+  updateUser,
+  deleteUser
 }

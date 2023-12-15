@@ -1,5 +1,5 @@
-import express from 'express'
-import { getCounter, createCounter, updateCounter, deleteCounter, getCounterById } from '../controllers/CounterController.js'
+const express = require('express')
+const { getCounter, createCounter, updateCounter, deleteCounter, getCounterById } = require('../controllers/CounterController.js')
 
 const router = express.Router()
 
@@ -9,4 +9,4 @@ router.post('/counters', createCounter)
 router.patch('/counters/:id', updateCounter)
 router.delete('/counters/:id', deleteCounter)
 
-export default router
+module.exports = router

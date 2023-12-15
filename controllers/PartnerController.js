@@ -1,8 +1,8 @@
-import Partner from "../models/PartnerModel.js";
-import path from "path"
-import fs from "fs"
+const Partner = require("../models/PartnerModel.js")
+const path = require("path")
+const fs = require("fs")
 
-export const getPartners = async (req, res) => {
+const getPartners = async (req, res) => {
   try {
     const partner = await Partner.findAll({
       attributes: ['id', 'name', 'image', 'url']
@@ -13,7 +13,7 @@ export const getPartners = async (req, res) => {
   }
 }
 
-export const getPartnerById = async (req, res) => {
+const getPartnerById = async (req, res) => {
   try {
     const partner = await Partner.findOne({
       attributes: ['id', 'name', 'image', 'url'],
@@ -28,7 +28,7 @@ export const getPartnerById = async (req, res) => {
   }
 }
 
-export const createPartner = async (req, res) => {
+const createPartner = async (req, res) => {
   // Cek apakah ada file
   if (req.files === null) return res.status(400).json({ msg: "No file uploaded" })
 
@@ -67,7 +67,7 @@ export const createPartner = async (req, res) => {
   })
 }
 
-export const updatePartner = async (req, res) => {
+const updatePartner = async (req, res) => {
   const partner = await Partner.findOne({
     where: {
       id: req.params.id
@@ -118,7 +118,7 @@ export const updatePartner = async (req, res) => {
 
 }
 
-export const deletePartner = async (req, res) => {
+const deletePartner = async (req, res) => {
   const partner = await Partner.findOne({
     where: {
       id: req.params.id
@@ -139,4 +139,11 @@ export const deletePartner = async (req, res) => {
     res.status(400).json({ msg: error.message })
   }
 
+}
+
+module.exports = {
+  getPartners,
+  createPartner,
+  updatePartner,
+  deletePartner
 }

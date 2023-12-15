@@ -1,6 +1,6 @@
-import express from 'express'
-import { getVolunteers, getVolunteerById, createVolunteer, updateVolunteer, deleteVolunteer } from '../controllers/VolunteerController.js'
-import { verifyUser, adminOnly } from '../middleware/AuthUser.js'
+const express = require('express')
+const { getVolunteers, getVolunteerById, createVolunteer, updateVolunteer, deleteVolunteer } = require('../controllers/VolunteerController.js')
+const { verifyUser, adminOnly } = require('../middleware/AuthUser.js')
 
 const router = express.Router()
 
@@ -10,4 +10,4 @@ router.post('/volunteers', createVolunteer)
 router.patch('/volunteers/:id', updateVolunteer)
 router.delete('/volunteers/:id', deleteVolunteer)
 
-export default router
+module.exports = router

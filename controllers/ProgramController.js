@@ -1,6 +1,6 @@
-import Programs from "../models/ProgramModel.js";
+const Programs = require("../models/ProgramModel.js");
 
-export const getProgram = async (req, res) => {
+const getProgram = async (req, res) => {
   try {
     const programs = await Programs.findAll({
       attributes: ['id', 'name']
@@ -11,7 +11,7 @@ export const getProgram = async (req, res) => {
   }
 }
 
-export const getProgramById = async (req, res) => {
+const getProgramById = async (req, res) => {
   try {
     const program = await Programs.findOne({
       attributes: ['id', 'name']
@@ -27,7 +27,7 @@ export const getProgramById = async (req, res) => {
 
 }
 
-export const createProgram = async (req, res) => {
+const createProgram = async (req, res) => {
   const { name } = req.body;
   try {
     await Programs.create({
@@ -39,7 +39,7 @@ export const createProgram = async (req, res) => {
   }
 }
 
-export const updateProgram = async (req, res) => {
+const updateProgram = async (req, res) => {
   const program = await Programs.findOne({
     where: {
       id: req.params.id
@@ -61,7 +61,7 @@ export const updateProgram = async (req, res) => {
   }
 }
 
-export const deleteProgram = async (req, res) => {
+const deleteProgram = async (req, res) => {
   const program = await Programs.findOne({
     where: {
       id: req.params.id
@@ -79,3 +79,5 @@ export const deleteProgram = async (req, res) => {
     res.status(400).json({ msg: error.message });
   }
 }
+
+module.exports = { getProgram, getProgramById, createProgram, updateProgram, deleteProgram }

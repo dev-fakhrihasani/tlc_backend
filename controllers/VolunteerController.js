@@ -1,8 +1,8 @@
-import Volunteer from "../models/VolunteerModel.js";
-import path from "path";
-import fs from "fs"
+const Volunteer = require("../models/VolunteerModel.js")
+const path = require("path")
+const fs = require("fs")
 
-export const getVolunteers = async (req, res) => {
+const getVolunteers = async (req, res) => {
   try {
     const volunteers = await Volunteer.findAll({
       attributes: ['id', 'name', 'division', 'image', 'url'],
@@ -14,7 +14,7 @@ export const getVolunteers = async (req, res) => {
 }
 
 
-export const getVolunteerById = async (req, res) => {
+const getVolunteerById = async (req, res) => {
   try {
     const volunteer = await Volunteer.findOne({
       attributes: ['id', 'name', 'division', 'image', 'url'],
@@ -30,7 +30,7 @@ export const getVolunteerById = async (req, res) => {
 }
 
 
-export const createVolunteer = async (req, res) => {
+const createVolunteer = async (req, res) => {
   // Cek apakah ada file
   if (req.files === null) return res.status(400).json({ msg: "No file uploaded" })
 
@@ -71,7 +71,7 @@ export const createVolunteer = async (req, res) => {
   })
 }
 
-export const updateVolunteer = async (req, res) => {
+const updateVolunteer = async (req, res) => {
 
   const volunteer = await Volunteer.findOne({
     where: {
@@ -124,7 +124,7 @@ export const updateVolunteer = async (req, res) => {
 }
 
 
-export const deleteVolunteer = async (req, res) => {
+const deleteVolunteer = async (req, res) => {
   const volunteer = await Volunteer.findOne({
     where: {
       id: req.params.id
@@ -144,4 +144,12 @@ export const deleteVolunteer = async (req, res) => {
   } catch (error) {
     res.status(400).json({ msg: error.message })
   }
+}
+
+module.exports = {
+  getVolunteers,
+  getVolunteerById,
+  createVolunteer,
+  updateVolunteer,
+  deleteVolunteer
 }

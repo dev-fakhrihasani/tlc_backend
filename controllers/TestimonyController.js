@@ -1,8 +1,8 @@
-import Testimony from "../models/TestimonyModel.js"
-import path from "path"
-import fs from "fs"
+const Testimony = require("../models/TestimonyModel.js")
+const path = require("path")
+const fs = require("fs")
 
-export const getTestimonies = async (req, res) => {
+const getTestimonies = async (req, res) => {
   try {
     const testimony = await Testimony.findAll({
       attributes: ["id", "name", "position", "desc", "image", "url"]
@@ -13,7 +13,7 @@ export const getTestimonies = async (req, res) => {
   }
 }
 
-export const getTestimonyById = async (req, res) => {
+const getTestimonyById = async (req, res) => {
   try {
     const testimony = await Testimony.findOne({
       where: {
@@ -27,7 +27,7 @@ export const getTestimonyById = async (req, res) => {
   }
 }
 
-export const createTestimony = async (req, res) => {
+const createTestimony = async (req, res) => {
   // Cek apakah ada file
   if (req.files === null) return res.status(400).json({ msg: "No file uploaded" })
 
@@ -70,7 +70,7 @@ export const createTestimony = async (req, res) => {
   })
 }
 
-export const updateTestimony = async (req, res) => {
+const updateTestimony = async (req, res) => {
   const testimony = await Testimony.findOne({
     where: {
       id: req.params.id
@@ -124,7 +124,7 @@ export const updateTestimony = async (req, res) => {
 
 }
 
-export const deleteTestimony = async (req, res) => {
+const deleteTestimony = async (req, res) => {
   const testimony = await Testimony.findOne({
     where: {
       id: req.params.id
@@ -145,4 +145,12 @@ export const deleteTestimony = async (req, res) => {
     res.status(400).json({ msg: error.message })
   }
 
+}
+
+module.exports = {
+  getTestimonies,
+  getTestimonyById,
+  createTestimony,
+  updateTestimony,
+  deleteTestimony
 }

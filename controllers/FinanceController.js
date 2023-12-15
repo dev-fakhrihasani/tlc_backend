@@ -1,6 +1,6 @@
-import Finances from "../models/FinanceModel.js";
+const Finances = require("../models/FinanceModel.js");
 
-export const getFinance = async (req, res) => {
+const getFinance = async (req, res) => {
   try {
     const finance = await Finances.findAll({
       attributes: ['id', 'month', 'income', 'outcome']
@@ -11,7 +11,7 @@ export const getFinance = async (req, res) => {
   }
 }
 
-export const getFinanceById = async (req, res) => {
+const getFinanceById = async (req, res) => {
   try {
     const finance = await Finances.findOne({
       attributes: ['id', 'month', 'income', 'outcome'],
@@ -26,7 +26,7 @@ export const getFinanceById = async (req, res) => {
   }
 }
 
-export const createFinance = async (req, res) => {
+const createFinance = async (req, res) => {
   const { month, income, outcome } = req.body
   try {
     await Finances.create({
@@ -38,7 +38,7 @@ export const createFinance = async (req, res) => {
   }
 }
 
-export const updateFinance = async (req, res) => {
+const updateFinance = async (req, res) => {
   const finance = await Finances.findOne({
     where: {
       id: req.params.id
@@ -60,7 +60,7 @@ export const updateFinance = async (req, res) => {
   }
 }
 
-export const deleteFinance = async (req, res) => {
+const deleteFinance = async (req, res) => {
   const finance = await Finances.findOne({
     where: {
       id: req.params.id
@@ -77,4 +77,12 @@ export const deleteFinance = async (req, res) => {
   } catch (error) {
     res.status(500).json({ msg: error.message })
   }
+}
+
+module.exports = {
+  getFinance,
+  getFinanceById,
+  createFinance,
+  updateFinance,
+  deleteFinance
 }

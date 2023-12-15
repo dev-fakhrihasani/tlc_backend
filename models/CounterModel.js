@@ -1,5 +1,5 @@
-import { Sequelize } from "sequelize";
-import db from "../config/Database.js";
+const { Sequelize } = require("sequelize");
+const db = require("../config/Database.js");
 
 const { DataTypes } = Sequelize;
 
@@ -26,4 +26,4 @@ const Counters = db.define('counters', {
   }
 })
 
-export default Counters
+module.exports = Counters

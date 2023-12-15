@@ -1,5 +1,5 @@
-import express from 'express'
-import { getProgram, createProgram, deleteProgram, updateProgram, getProgramById } from '../controllers/ProgramController.js'
+const express = require('express')
+const { getProgram, createProgram, deleteProgram, updateProgram, getProgramById } = require('../controllers/ProgramController.js')
 
 const router = express.Router()
 
@@ -9,4 +9,4 @@ router.post('/programs', createProgram)
 router.patch('/programs/:id', updateProgram)
 router.delete('/programs/:id', deleteProgram)
 
-export default router
+module.exports = router

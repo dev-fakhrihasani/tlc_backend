@@ -1,10 +1,10 @@
-import Blog from "../models/BlogModel.js";
-import User from "../models/UserModel.js";
-// import { Op } from "sequelize"
-import path from "path"
-import fs from "fs"
+const Blog = require("../models/BlogModel.js");
+const User = require("../models/UserModel.js");
+// const Op = require("sequelize")
+const path = require("path")
+const fs = require("fs")
 
-export const getBlogs = async (req, res) => {
+const getBlogs = async (req, res) => {
   try {
     let blog
     if (req.role === "Admin") {
@@ -28,7 +28,7 @@ export const getBlogs = async (req, res) => {
   }
 }
 
-export const getBlogById = async (req, res) => {
+const getBlogById = async (req, res) => {
   try {
     const blog = await Blog.findOne({
       attributes: ['id', 'title', 'slug', 'desc', 'date', 'category', 'image', 'url'],
@@ -48,7 +48,7 @@ export const getBlogById = async (req, res) => {
   }
 }
 
-export const createBlog = async (req, res) => {
+const createBlog = async (req, res) => {
   // Cek apakah ada file
   if (req.files === null) return res.status(400).json({ msg: "No file uploaded" })
 
@@ -95,7 +95,7 @@ export const createBlog = async (req, res) => {
   })
 }
 
-export const updateBlog = async (req, res) => {
+const updateBlog = async (req, res) => {
   try {
     const blog = await Blog.findOne({
       where: {
@@ -157,7 +157,7 @@ export const updateBlog = async (req, res) => {
 
   }
 }
-export const deleteBlog = async (req, res) => {
+const deleteBlog = async (req, res) => {
   try {
     const blog = await Blog.findOne({
       where: {
@@ -184,3 +184,5 @@ export const deleteBlog = async (req, res) => {
 
   }
 }
+
+module.exports = { getBlogs, getBlogById, createBlog, updateBlog, deleteBlog }

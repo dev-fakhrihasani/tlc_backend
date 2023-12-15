@@ -1,6 +1,6 @@
-import Counters from '../models/CounterModel.js'
+const Counters = require('../models/CounterModel.js')
 
-export const getCounter = async (req, res) => {
+const getCounter = async (req, res) => {
   try {
     const counter = await Counters.findAll({
       attributes: ['id', 'name', 'amount']
@@ -11,7 +11,7 @@ export const getCounter = async (req, res) => {
   }
 }
 
-export const getCounterById = async (req, res) => {
+const getCounterById = async (req, res) => {
   try {
     const counter = await Counters.findOne({
       attributes: ['id', 'name', 'amount'],
@@ -29,7 +29,7 @@ export const getCounterById = async (req, res) => {
   }
 }
 
-export const createCounter = async (req, res) => {
+const createCounter = async (req, res) => {
   const { name, amount } = req.body
   try {
     await Counters.create({
@@ -42,7 +42,7 @@ export const createCounter = async (req, res) => {
   }
 }
 
-export const updateCounter = async (req, res) => {
+const updateCounter = async (req, res) => {
   const counter = await Counters.findOne({
     where: {
       id: req.params.id
@@ -65,7 +65,7 @@ export const updateCounter = async (req, res) => {
   }
 }
 
-export const deleteCounter = async (req, res) => {
+const deleteCounter = async (req, res) => {
   const counter = await Counters.findOne({
     where: {
       id: req.params.id
@@ -83,4 +83,12 @@ export const deleteCounter = async (req, res) => {
     res.status(501).json({ msg: error.message })
 
   }
+}
+
+module.exports = {
+  getCounter,
+  getCounterById,
+  createCounter,
+  updateCounter,
+  deleteCounter
 }

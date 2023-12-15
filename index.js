@@ -1,31 +1,31 @@
-import express from 'express';
-import cors from 'cors'
-import session from 'express-session'
-import dotenv from 'dotenv'
-import SequelizeStore from "connect-session-sequelize"
-import FileUpload from "express-fileupload"
-import db from './config/Database.js';
+const express = require('express')
+const cors = require('cors')
+const session = require('express-session')
+const dotenv = require('dotenv')
+const SequelizeStore = require("connect-session-sequelize")
+const FileUpload = require("express-fileupload")
+const db = require('./config/Database.js')
 
 // import MODELS for create DB
-import Users from './models/UserModel.js';
-import Counters from './models/CounterModel.js';
-import Programs from './models/ProgramModel.js';
-import Finances from './models/FinanceModel.js';
-import Blogs from './models/BlogModel.js';
-import Partners from './models/PartnerModel.js';
-import Testimony from './models/TestimonyModel.js';
-import Volunteer from './models/VolunteerModel.js';
+const Users = require('./models/UserModel.js')
+const Counters = require('./models/CounterModel.js')
+const Programs = require('./models/ProgramModel.js')
+const Finances = require('./models/FinanceModel.js')
+const Blogs = require('./models/BlogModel.js')
+const Partners = require('./models/PartnerModel.js')
+const Testimony = require('./models/TestimonyModel.js')
+const Volunteer = require('./models/VolunteerModel.js')
 
 // import ROUTES
-import UserRoute from './routes/UserRouter.js';
-import CounterRoute from './routes/CounterRoute.js'
-import ProgramRoute from './routes/ProgramRoute.js'
-import FinanceRoute from './routes/FinanceRoute.js'
-import AuthRoute from './routes/AuthRoute.js'
-import BlogRoute from './routes/BlogRoute.js'
-import PartnerRoute from './routes/PartnerRoute.js'
-import TestimonyRoute from './routes/TestimonyRoute.js'
-import VolunteerRoute from './routes/VolunteerRoute.js'
+const UserRoute = require('./routes/UserRouter.js')
+const CounterRoute = require('./routes/CounterRoute.js')
+const ProgramRoute = require('./routes/ProgramRoute.js')
+const FinanceRoute = require('./routes/FinanceRoute.js')
+const AuthRoute = require('./routes/AuthRoute.js')
+const BlogRoute = require('./routes/BlogRoute.js')
+const PartnerRoute = require('./routes/PartnerRoute.js')
+const TestimonyRoute = require('./routes/TestimonyRoute.js')
+const VolunteerRoute = require('./routes/VolunteerRoute.js')
 
 dotenv.config()
 const app = express();

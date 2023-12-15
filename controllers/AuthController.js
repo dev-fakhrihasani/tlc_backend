@@ -1,7 +1,7 @@
-import Users from "../models/UserModel.js"
-import argon from "argon2"
+const Users = require("../models/UserModel.js")
+const argon = require("argon2")
 
-export const Login = async (req, res) => {
+const Login = async (req, res) => {
   const user = await Users.findOne({
     where: {
       email: req.body.email
@@ -22,7 +22,7 @@ export const Login = async (req, res) => {
   res.status(200).json({ uuid, name, email, role, job, image, url })
 }
 
-export const Me = async (req, res) => {
+const Me = async (req, res) => {
   if (!req.session.userId) return res.status(401).json({ msg: "Please login!" })
   const user = await Users.findOne({
     attributes: ['uuid', 'name', 'email', 'role', 'job', 'image', 'url'],
@@ -34,9 +34,15 @@ export const Me = async (req, res) => {
   res.status(200).json(user)
 }
 
-export const logOut = (req, res) => {
+const logOut = (req, res) => {
   req.session.destroy((error) => {
     if (error) return res.status(400).json({ msg: "Cannot logout" })
     res.status(200).json({ msg: "Your account has been logged out" })
   })
+}
+
+module.exports = {
+  Login,
+  Me,
+  logOut
 }
