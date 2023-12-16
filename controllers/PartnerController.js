@@ -143,6 +143,7 @@ const deletePartner = async (req, res) => {
 
 module.exports = {
   getPartners,
+  getPartnerById,
   createPartner,
   updatePartner,
   deletePartner

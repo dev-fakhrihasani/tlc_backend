@@ -5,6 +5,7 @@ const dotenv = require('dotenv')
 const SequelizeStore = require("connect-session-sequelize")
 const FileUpload = require("express-fileupload")
 const db = require('./config/Database.js')
+const Sequelize = require('sequelize')
 
 // import MODELS for create DB
 const Users = require('./models/UserModel.js')
@@ -30,11 +31,6 @@ const VolunteerRoute = require('./routes/VolunteerRoute.js')
 dotenv.config()
 const app = express();
 
-const sessionStore = SequelizeStore(session.Store)
-const store = new sessionStore({
-  db: db
-})
-
 // //command for create table
 // (async () => {
 //   await db.sync()
@@ -54,6 +50,32 @@ const store = new sessionStore({
 // } catch (error) {
 //   console.error('Connection error:', error);
 // }
+
+db.define("sessions", {
+  sid: {
+    type: Sequelize.STRING,
+    primaryKey: true,
+  },
+  userId: Sequelize.STRING,
+  expires: Sequelize.DATE,
+  data: Sequelize.TEXT,
+});
+
+function extendDefaultFields(defaults, session) {
+  return {
+    data: defaults.data,
+    expires: defaults.expires,
+    userId: session.userId,
+  };
+}
+
+const sessionStore = SequelizeStore(session.Store)
+var store = new sessionStore({
+  db: db,
+  table: "sessions",
+  extendDefaultFields: extendDefaultFields
+})
+
 
 app.use(session({
   secret: process.env.SESS_SECRET,
@@ -86,7 +108,7 @@ app.use(PartnerRoute)
 app.use(TestimonyRoute)
 app.use(VolunteerRoute)
 
-// store.sync()
+db.sync()
 
 app.listen(process.env.APP_PORT, () => {
   console.log('Server up and running in port 5000....');
