@@ -16,6 +16,7 @@ const Blogs = require('./models/BlogModel.js')
 const Partners = require('./models/PartnerModel.js')
 const Testimony = require('./models/TestimonyModel.js')
 const Volunteer = require('./models/VolunteerModel.js')
+const Berita = require('./models/BeritaModel.js')
 
 // import ROUTES
 const UserRoute = require('./routes/UserRouter.js')
@@ -46,20 +47,30 @@ const app = express();
 //   console.log('Database connected...');
 //   // await Users.sync();
 //   // await Blogs.sync();
-//   await Finances.sync();
+//   await Berita.sync();
 // } catch (error) {
 //   console.error('Connection error:', error);
 // }
 
-db.define("sessions", {
-  sid: {
-    type: Sequelize.STRING,
-    primaryKey: true,
-  },
-  userId: Sequelize.STRING,
-  expires: Sequelize.DATE,
-  data: Sequelize.TEXT,
-});
+// db.define("berita", {
+//   sid: {
+//     type: Sequelize.STRING,
+//     primaryKey: true,
+//   },
+//   title: Sequelize.STRING,
+//   image: Sequelize.STRING,
+//   url: Sequelize.STRING,
+// });
+
+// db.define("sessions", {
+//   sid: {
+//     type: Sequelize.STRING,
+//     primaryKey: true,
+//   },
+//   userId: Sequelize.STRING,
+//   expires: Sequelize.DATE,
+//   data: Sequelize.TEXT,
+// });
 
 function extendDefaultFields(defaults, session) {
   return {
