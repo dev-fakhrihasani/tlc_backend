@@ -28,12 +28,12 @@ const getBeritaById = async (req, res) => {
   }
 }
 
-const createPartner = async (req, res) => {
+const createBerita = async (req, res) => {
   // Cek apakah ada file
   if (req.files === null) return res.status(400).json({ msg: "No file uploaded" })
 
   // Setting variabel untuk input data
-  const name = req.body.name
+  const title = req.body.title
 
   // Setting input file
   const file = req.files.file
@@ -55,25 +55,25 @@ const createPartner = async (req, res) => {
 
     // Create data
     try {
-      await Partner.create({
-        name,
+      await Berita.create({
+        title,
         image: fileName,
         url: url
       })
-      res.status(201).json({ msg: "Partner created successfully" })
+      res.status(201).json({ msg: "Berita created successfully" })
     } catch (error) {
       res.status(400).json({ msg: error.message })
     }
   })
 }
 
-const updatePartner = async (req, res) => {
-  const partner = await Partner.findOne({
+const updateBerita = async (req, res) => {
+  const berita = await Berita.findOne({
     where: {
       id: req.params.id
     }
   })
-  if (!partner) return req.status(404).json({ msg: "Partner ID not found" })
+  if (!berita) return req.status(404).json({ msg: "Berita ID not found" })
 
   // Cek apakah ada file
   let fileName = ""
@@ -97,20 +97,20 @@ const updatePartner = async (req, res) => {
     })
   }
 
-  const name = req.body.name
+  const title = req.body.title
   const url = `${req.protocol}://${req.get("host")}/images/${fileName}`
 
   try {
-    await Partner.update({
-      name,
+    await Berita.update({
+      title,
       image: fileName,
       url
     }, {
       where: {
-        id: partner.id
+        id: berita.id
       }
     })
-    res.status(200).json({ msg: "Partner updated successfully" })
+    res.status(200).json({ msg: "Berita updated successfully" })
     // res.json(user)
   } catch (error) {
     res.status(400).json({ msg: error.message })
@@ -118,23 +118,23 @@ const updatePartner = async (req, res) => {
 
 }
 
-const deletePartner = async (req, res) => {
-  const partner = await Partner.findOne({
+const deleteBerita = async (req, res) => {
+  const berita = await Berita.findOne({
     where: {
       id: req.params.id
     }
   })
-  if (!partner) return res.status(401).json({ msg: "Partner ID not found" })
+  if (!berita) return res.status(401).json({ msg: "Berita ID not found" })
 
   try {
     const filepath = `./public/images/${partner.image}`
     fs.unlinkSync(filepath)
-    await Partner.destroy({
+    await Berita.destroy({
       where: {
-        id: partner.id
+        id: berita.id
       }
     })
-    res.status(200).json({ msg: "Partner deleted successfully" })
+    res.status(200).json({ msg: "Berita deleted successfully" })
   } catch (error) {
     res.status(400).json({ msg: error.message })
   }
@@ -142,9 +142,9 @@ const deletePartner = async (req, res) => {
 }
 
 module.exports = {
-  getPartners,
-  getPartnerById,
-  createPartner,
-  updatePartner,
-  deletePartner
+  getBerita,
+  getBeritaById,
+  createBerita,
+  updateBerita,
+  deleteBerita
 }
