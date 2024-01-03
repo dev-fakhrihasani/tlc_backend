@@ -4,7 +4,7 @@ const fs = require("fs")
 
 const getBerita = async (req, res) => {
   try {
-    const berita = await berita.findAll({
+    const berita = await Berita.findAll({
       attributes: ['id', 'title', 'image', 'url']
     })
     res.status(200).json(berita)
@@ -78,7 +78,7 @@ const updateBerita = async (req, res) => {
   // Cek apakah ada file
   let fileName = ""
   if (req.files === null) {
-    fileName = partner.image
+    fileName = berita.image
   } else {
     const file = req.files.file
     const fileSize = file.data.length
@@ -90,7 +90,7 @@ const updateBerita = async (req, res) => {
     if (!allowedType.includes(ext.toLowerCase())) return res.status(422).json({ msg: "Image extension must be JPG or PNG" })
     if (fileSize > 5000000) return res.status(422).json({ msg: "Image must be less than 5 MB" })
 
-    const filepath = `./public/images/${partner.image}`
+    const filepath = `./public/images/${berita.image}`
     fs.unlinkSync(filepath)
     file.mv(`./public/images/${fileName}`, (err) => {
       if (err) return res.status(500).json({ msg: err.message })
@@ -127,7 +127,7 @@ const deleteBerita = async (req, res) => {
   if (!berita) return res.status(401).json({ msg: "Berita ID not found" })
 
   try {
-    const filepath = `./public/images/${partner.image}`
+    const filepath = `./public/images/${berita.image}`
     fs.unlinkSync(filepath)
     await Berita.destroy({
       where: {

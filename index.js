@@ -28,6 +28,7 @@ const BlogRoute = require('./routes/BlogRoute.js')
 const PartnerRoute = require('./routes/PartnerRoute.js')
 const TestimonyRoute = require('./routes/TestimonyRoute.js')
 const VolunteerRoute = require('./routes/VolunteerRoute.js')
+const BeritaRoute = require('./routes/BeritaRoute.js')
 
 dotenv.config()
 const app = express();
@@ -62,15 +63,15 @@ const app = express();
 //   url: Sequelize.STRING,
 // });
 
-// db.define("sessions", {
-//   sid: {
-//     type: Sequelize.STRING,
-//     primaryKey: true,
-//   },
-//   userId: Sequelize.STRING,
-//   expires: Sequelize.DATE,
-//   data: Sequelize.TEXT,
-// });
+db.define("sessions", {
+  sid: {
+    type: Sequelize.STRING,
+    primaryKey: true,
+  },
+  userId: Sequelize.STRING,
+  expires: Sequelize.DATE,
+  data: Sequelize.TEXT,
+});
 
 function extendDefaultFields(defaults, session) {
   return {
@@ -118,6 +119,7 @@ app.use(BlogRoute)
 app.use(PartnerRoute)
 app.use(TestimonyRoute)
 app.use(VolunteerRoute)
+app.use(BeritaRoute)
 
 db.sync()
 
